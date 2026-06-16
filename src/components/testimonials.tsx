@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useState } from "react"
 import { ChevronLeft, ChevronRight, Star } from "lucide-react"
 
 const testimonials = [
@@ -32,17 +32,10 @@ const testimonials = [
 
 export default function Testimonials() {
   const [active, setActive] = useState(0)
-  const ref = useRef<HTMLDivElement>(null)
+  const [visible, setVisible] = useState(false)
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        entry.target.classList.toggle("animate-slide-up", entry.isIntersecting)
-      },
-      { threshold: 0.1 }
-    )
-    if (ref.current) observer.observe(ref.current)
-    return () => observer.disconnect()
+    setVisible(true)
   }, [])
 
   const next = () => setActive((a) => (a + 1) % testimonials.length)
@@ -51,7 +44,7 @@ export default function Testimonials() {
   return (
     <section className="py-16 lg:py-24 bg-gradient-to-b from-white to-primary/5">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div ref={ref} className="opacity-0">
+        <div style={{ opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(2rem)" }} className="transition-all duration-700 delay-200">
           <div className="text-center max-w-2xl mx-auto mb-12">
             <div className="inline-block px-4 py-2 bg-accent/10 rounded-full text-accent text-sm font-medium mb-4">
               Testimonials

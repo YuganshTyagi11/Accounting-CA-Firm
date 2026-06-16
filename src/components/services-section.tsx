@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef } from "react"
+import { useEffect, useState } from "react"
 import Link from "next/link"
 import { ArrowRight, FileText, Receipt, ShieldCheck, Building2, PiggyBank, Scale } from "lucide-react"
 
@@ -44,23 +44,16 @@ const services = [
 ]
 
 export default function ServicesSection() {
-  const ref = useRef<HTMLDivElement>(null)
+  const [visible, setVisible] = useState(false)
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        entry.target.classList.toggle("animate-slide-up", entry.isIntersecting)
-      },
-      { threshold: 0.1 }
-    )
-    if (ref.current) observer.observe(ref.current)
-    return () => observer.disconnect()
+    setVisible(true)
   }, [])
 
   return (
     <section className="py-16 lg:py-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div ref={ref} className="text-center max-w-2xl mx-auto mb-12 lg:mb-16 opacity-0">
+        <div style={{ opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(2rem)" }} className="text-center max-w-2xl mx-auto mb-12 lg:mb-16 transition-all duration-700 delay-100">
           <div className="inline-block px-4 py-2 bg-primary/5 rounded-full text-primary text-sm font-medium mb-4">
             What We Offer
           </div>
